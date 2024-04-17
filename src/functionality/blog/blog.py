@@ -34,4 +34,4 @@ def uupdate(id, request: schema.Blog, db: Session = Depends(get_db)):
     blog.name = request.name
     db.add(blog)
     db.commit()
-    return "updated"
+    return "updated" 
