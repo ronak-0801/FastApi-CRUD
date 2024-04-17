@@ -2,16 +2,8 @@ from fastapi import Depends
 from src.resource.blog import model
 from src.resource.blog import schema
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from database import  get_db
 
-
-
-def get_db():
-   db = SessionLocal()
-   try:
-       yield db
-   finally:
-       db.close()
 
 
 def create(request:schema.Blog, db :Session = Depends(get_db)):
@@ -36,11 +28,10 @@ def delete(id,db: Session = Depends(get_db)):
 
 def uupdate(id, request: schema.Blog, db: Session = Depends(get_db)):
     blog = db.query(model.Blog).filter(model.Blog.id == id).first()
-    
 
     blog.title = request.title
     blog.body = request.body
     blog.name = request.name
-
+    db.add(blog)
     db.commit()
     return "updated"

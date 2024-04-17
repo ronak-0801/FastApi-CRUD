@@ -2,17 +2,10 @@ from fastapi import  APIRouter, Depends
 from src.resource.blog import model
 from src.resource.blog import schema
 from sqlalchemy.orm import Session
-from database import engine , SessionLocal
-
-
+from database import engine,  get_db
 from src.functionality.blog.blog import create, all,show,delete,uupdate
 
-def get_db():
-   db = SessionLocal()
-   try:
-       yield db
-   finally:
-       db.close()
+
   
 blog_route = APIRouter()
  
